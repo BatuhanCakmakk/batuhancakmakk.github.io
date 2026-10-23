@@ -152,6 +152,41 @@
             opacity: 1;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .lang-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: 1px solid var(--border);
+            padding: 5px 10px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+
+        .lang-toggle:hover,
+        .lang-toggle:focus-visible {
+            border-color: var(--cyan-dim);
+            outline: none;
+        }
+
+        .lang-toggle span {
+            transition: color 0.3s;
+        }
+
+        .lang-toggle .active {
+            color: var(--cyan);
+        }
+
         .nav-burger {
             display: none;
             flex-direction: column;
@@ -464,7 +499,19 @@
         .timeline-role {
             font-size: 0.8rem;
             color: var(--text-secondary);
+            margin-bottom: 0.4rem;
+        }
+
+        .timeline-location {
+            font-size: 0.72rem;
+            color: var(--text-dim);
             margin-bottom: 1rem;
+        }
+
+        .timeline-location i {
+            margin-right: 6px;
+            color: var(--cyan);
+            font-size: 0.65rem;
         }
 
         .timeline-tags {
@@ -696,6 +743,13 @@
             margin-bottom: 1rem;
         }
 
+        .project-icon img {
+            display: block;
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+        }
+
         .project-name {
             font-family: var(--font-display);
             font-weight: 700;
@@ -722,6 +776,94 @@
             border: 1px solid var(--green-dim);
             color: var(--green);
             letter-spacing: 1px;
+        }
+
+        .project-group {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--cyan);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .project-group::before {
+            content: '//';
+            color: var(--text-dim);
+        }
+
+        .project-group::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+        }
+
+        .projects-grid + .project-group {
+            margin-top: 3.5rem;
+        }
+
+        /* Whole card is clickable via the title link; other links sit above it */
+        .project-name a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .project-name a::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .project-name a:focus-visible {
+            outline: none;
+        }
+
+        .project-name a:focus-visible::after {
+            outline: 1px solid var(--cyan);
+            outline-offset: -1px;
+        }
+
+        .project-corner {
+            position: absolute;
+            top: 1.6rem;
+            right: 1.6rem;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .project-card:hover .project-corner {
+            color: var(--cyan);
+            transform: translate(2px, -2px);
+        }
+
+        .project-store {
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 1rem;
+            font-size: 0.68rem;
+            letter-spacing: 1px;
+            color: var(--magenta);
+            text-decoration: none;
+            padding: 6px 12px;
+            border: 1px solid var(--magenta-dim);
+            transition: all 0.3s;
+        }
+
+        .project-store:hover,
+        .project-store:focus-visible {
+            background: rgba(255, 45, 117, 0.08);
+            border-color: var(--magenta);
+            outline: none;
         }
 
         /* ═══════════ CONTACT ═══════════ */
@@ -964,34 +1106,39 @@
     <!-- NAVIGATION -->
     <nav id="navbar">
         <a href="#hero" class="nav-logo">BC<span>://</span></a>
-        <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <button class="nav-burger" id="burger" aria-label="Toggle menu">
-            <span></span><span></span><span></span>
-        </button>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#about" data-i18n="nav.about">About</a></li>
+                <li><a href="#experience" data-i18n="nav.experience">Experience</a></li>
+                <li><a href="#education" data-i18n="nav.education">Education</a></li>
+                <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
+                <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            <button class="lang-toggle" id="langToggle" type="button" aria-label="Türkçe / English">
+                <span data-lang="en">EN</span><span class="lang-sep">/</span><span data-lang="tr">TR</span>
+            </button>
+            <button class="nav-burger" id="burger" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </nav>
 
     <!-- MOBILE MENU -->
     <div class="mobile-menu" id="mobileMenu">
         <button class="mobile-close" id="mobileClose" aria-label="Close menu"><i class="fas fa-times"></i></button>
-        <a href="#about" class="mobile-link">About</a>
-        <a href="#experience" class="mobile-link">Experience</a>
-        <a href="#education" class="mobile-link">Education</a>
-        <a href="#skills" class="mobile-link">Skills</a>
-        <a href="#projects" class="mobile-link">Projects</a>
-        <a href="#contact" class="mobile-link">Contact</a>
+        <a href="#about" class="mobile-link" data-i18n="nav.about">About</a>
+        <a href="#experience" class="mobile-link" data-i18n="nav.experience">Experience</a>
+        <a href="#education" class="mobile-link" data-i18n="nav.education">Education</a>
+        <a href="#skills" class="mobile-link" data-i18n="nav.skills">Skills</a>
+        <a href="#projects" class="mobile-link" data-i18n="nav.projects">Projects</a>
+        <a href="#contact" class="mobile-link" data-i18n="nav.contact">Contact</a>
     </div>
 
     <!-- HERO -->
     <section class="hero" id="hero">
         <div class="hero-inner">
-            <div class="hero-tag">SYSTEM ONLINE</div>
+            <div class="hero-tag" data-i18n="hero.tag">SYSTEM ONLINE</div>
             <h1>
                 <span class="first-name">Batuhan</span><br>
                 <span class="last-name glitch">Çakmak</span>
@@ -1001,10 +1148,10 @@
             </div>
             <div class="hero-cta">
                 <a href="#contact" class="btn btn-primary">
-                    <i class="fas fa-terminal"></i> Get in Touch
+                    <i class="fas fa-terminal"></i> <span data-i18n="hero.contact">Get in Touch</span>
                 </a>
                 <a href="#projects" class="btn btn-ghost">
-                    <i class="fas fa-code"></i> View Projects
+                    <i class="fas fa-code"></i> <span data-i18n="hero.projects">View Projects</span>
                 </a>
             </div>
         </div>
@@ -1014,31 +1161,31 @@
     <section id="about">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-label">About</div>
-                <h2 class="section-title">Who I Am</h2>
+                <div class="section-label" data-i18n="nav.about">About</div>
+                <h2 class="section-title" data-i18n="about.title">Who I Am</h2>
                 <div class="section-line"></div>
             </div>
             <div class="about-grid">
                 <div class="about-text reveal">
-                    <p>I am currently pursuing my undergraduate degree in <strong style="color:var(--cyan)">Computer Engineering</strong> at Yıldız Technical University. Areas such as data analysis, cybersecurity, and artificial intelligence are a great source of passion for me.</p>
-                    <p>In addition to my technical knowledge and skills, I place great importance on personal development. Staying up-to-date and following innovations in the rapidly changing world of technology is a top priority for me.</p>
+                    <p data-i18n="about.p1">I am currently pursuing my undergraduate degree in <strong style="color:var(--cyan)">Computer Engineering</strong> at Yıldız Technical University. Areas such as data analysis, cybersecurity, and artificial intelligence are a great source of passion for me.</p>
+                    <p data-i18n="about.p2">In addition to my technical knowledge and skills, I place great importance on personal development. Staying up-to-date and following innovations in the rapidly changing world of technology is a top priority for me.</p>
                 </div>
                 <div class="about-stats reveal">
                     <div class="stat-card">
                         <div class="stat-number">7+</div>
-                        <div class="stat-label">Years in CS</div>
+                        <div class="stat-label" data-i18n="about.stat.years">Years in CS</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number">3</div>
-                        <div class="stat-label">Focus Areas</div>
+                        <div class="stat-label" data-i18n="about.stat.areas">Focus Areas</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number">6+</div>
-                        <div class="stat-label">Technologies</div>
+                        <div class="stat-label" data-i18n="about.stat.tech">Technologies</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number">2</div>
-                        <div class="stat-label">Languages</div>
+                        <div class="stat-label" data-i18n="about.stat.langs">Languages</div>
                     </div>
                 </div>
             </div>
@@ -1049,21 +1196,33 @@
     <section id="experience">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-label">Experience</div>
-                <h2 class="section-title">Where I've Worked</h2>
+                <div class="section-label" data-i18n="nav.experience">Experience</div>
+                <h2 class="section-title" data-i18n="experience.title">Where I've Worked</h2>
                 <div class="section-line"></div>
             </div>
             <div class="timeline reveal">
                 <div class="timeline-item">
-                    <div class="timeline-date">June 2024 — August 2024</div>
-                    <div class="timeline-company">EnerjiSA</div>
-                    <div class="timeline-role">Cyber Security Intern — Information Technologies</div>
+                    <div class="timeline-date" data-i18n="exp.nicpro.date">September 2026 — Present</div>
+                    <div class="timeline-company">NicPro Technologies</div>
+                    <div class="timeline-role" data-i18n="exp.nicpro.role">Network Intern</div>
+                    <div class="timeline-location"><i class="fas fa-map-marker-alt"></i><span data-i18n="exp.nicpro.loc">Canada (Remote)</span></div>
                     <div class="timeline-tags">
-                        <span class="tag">Network Protocols</span>
-                        <span class="tag">Threat Detection</span>
-                        <span class="tag">Ethical Hacking</span>
-                        <span class="tag">SOC Operations</span>
-                        <span class="tag">Security Analysis</span>
+                        <span class="tag">Cisco Meraki</span>
+                        <span class="tag">FortiGate</span>
+                        <span class="tag" data-i18n="exp.nicpro.ccna">CCNA Training</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date" data-i18n="exp.enerjisa.date">June 2024 — August 2024</div>
+                    <div class="timeline-company">EnerjiSA</div>
+                    <div class="timeline-role" data-i18n="exp.enerjisa.role">Cyber Security Intern — Information Technologies</div>
+                    <div class="timeline-location"><i class="fas fa-map-marker-alt"></i><span data-i18n="exp.enerjisa.loc">İstanbul, Turkey</span></div>
+                    <div class="timeline-tags">
+                        <span class="tag" data-i18n="exp.enerjisa.protocols">Network Protocols</span>
+                        <span class="tag" data-i18n="exp.enerjisa.threat">Threat Detection</span>
+                        <span class="tag" data-i18n="exp.enerjisa.hacking">Ethical Hacking</span>
+                        <span class="tag" data-i18n="exp.enerjisa.soc">SOC Operations</span>
+                        <span class="tag" data-i18n="exp.enerjisa.analysis">Security Analysis</span>
                     </div>
                 </div>
             </div>
@@ -1074,24 +1233,24 @@
     <section id="education">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-label">Education</div>
-                <h2 class="section-title">Academic Background</h2>
+                <div class="section-label" data-i18n="nav.education">Education</div>
+                <h2 class="section-title" data-i18n="education.title">Academic Background</h2>
                 <div class="section-line"></div>
             </div>
             <div class="edu-cards">
                 <div class="edu-card reveal">
                     <div class="edu-icon"><i class="fas fa-microchip"></i></div>
                     <div>
-                        <div class="edu-name">Yıldız Technical University</div>
-                        <div class="edu-degree">Bachelor's Degree — Computer Engineering</div>
+                        <div class="edu-name" data-i18n="edu.ytu.name">Yıldız Technical University</div>
+                        <div class="edu-degree" data-i18n="edu.ytu.degree">Bachelor's Degree — Computer Engineering</div>
                         <div class="edu-year">2018 — 2025</div>
                     </div>
                 </div>
                 <div class="edu-card reveal">
                     <div class="edu-icon"><i class="fas fa-award"></i></div>
                     <div>
-                        <div class="edu-name">Bahçeşehir Anatolian High School</div>
-                        <div class="edu-degree">Top Student</div>
+                        <div class="edu-name" data-i18n="edu.hs.name">Bahçeşehir Anatolian High School</div>
+                        <div class="edu-degree" data-i18n="edu.hs.degree">Valedictorian</div>
                         <div class="edu-year">2014 — 2018</div>
                     </div>
                 </div>
@@ -1103,13 +1262,13 @@
     <section id="skills">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-label">Skills</div>
-                <h2 class="section-title">My Arsenal</h2>
+                <div class="section-label" data-i18n="nav.skills">Skills</div>
+                <h2 class="section-title" data-i18n="skills.title">My Arsenal</h2>
                 <div class="section-line"></div>
             </div>
             <div class="skills-grid">
                 <div class="skills-category reveal">
-                    <h3><i class="fas fa-code" style="margin-right:8px;color:var(--cyan)"></i>Technical</h3>
+                    <h3><i class="fas fa-code" style="margin-right:8px;color:var(--cyan)"></i><span data-i18n="skills.technical">Technical</span></h3>
                     <div class="skill-item">
                         <div class="skill-header">
                             <span class="skill-name">Python</span>
@@ -1170,27 +1329,33 @@
                         </div>
                         <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
                     </div>
+                    <div class="skill-item">
+                        <div class="skill-header">
+                            <span class="skill-name">Claude Code</span>
+                        </div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+                    </div>
 
-                    <h3 style="margin-top:2.5rem"><i class="fas fa-globe" style="margin-right:8px;color:var(--cyan)"></i>Languages</h3>
+                    <h3 style="margin-top:2.5rem"><i class="fas fa-globe" style="margin-right:8px;color:var(--cyan)"></i><span data-i18n="skills.languages">Languages</span></h3>
                     <div class="lang-item">
-                        <span class="lang-name">Turkish</span>
-                        <span class="lang-level">Fluent</span>
+                        <span class="lang-name" data-i18n="skills.turkish">Turkish</span>
+                        <span class="lang-level" data-i18n="skills.fluent">Fluent</span>
                     </div>
                     <div class="lang-item">
-                        <span class="lang-name">English</span>
-                        <span class="lang-level">Upper Intermediate</span>
+                        <span class="lang-name" data-i18n="skills.english">English</span>
+                        <span class="lang-level" data-i18n="skills.upper">Upper Intermediate</span>
                     </div>
                 </div>
                 <div class="skills-category reveal">
-                    <h3><i class="fas fa-brain" style="margin-right:8px;color:var(--magenta)"></i>Soft Skills</h3>
+                    <h3><i class="fas fa-brain" style="margin-right:8px;color:var(--magenta)"></i><span data-i18n="skills.soft">Soft Skills</span></h3>
                     <div class="soft-skills-list">
-                        <span class="soft-tag"><i class="fas fa-crown" style="margin-right:6px;font-size:0.6rem"></i>Leadership</span>
-                        <span class="soft-tag"><i class="fas fa-comments" style="margin-right:6px;font-size:0.6rem"></i>Communication</span>
-                        <span class="soft-tag"><i class="fas fa-fire" style="margin-right:6px;font-size:0.6rem"></i>High Motivation</span>
-                        <span class="soft-tag"><i class="fas fa-users" style="margin-right:6px;font-size:0.6rem"></i>Teamwork</span>
-                        <span class="soft-tag"><i class="fas fa-bullseye" style="margin-right:6px;font-size:0.6rem"></i>Result Oriented</span>
-                        <span class="soft-tag"><i class="fas fa-calendar-check" style="margin-right:6px;font-size:0.6rem"></i>Planning</span>
-                        <span class="soft-tag"><i class="fas fa-book-open" style="margin-right:6px;font-size:0.6rem"></i>Open to Learning</span>
+                        <span class="soft-tag"><i class="fas fa-crown" style="margin-right:6px;font-size:0.6rem"></i><span data-i18n="soft.leadership">Leadership</span></span>
+                        <span class="soft-tag"><i class="fas fa-bolt" style="margin-right:6px;font-size:0.6rem"></i><span data-i18n="soft.learner">Quick Learner &amp; Highly Adaptable</span></span>
+                        <span class="soft-tag"><i class="fas fa-users" style="margin-right:6px;font-size:0.6rem"></i><span data-i18n="soft.teamwork">Teamwork</span></span>
+                        <span class="soft-tag"><i class="fas fa-comments" style="margin-right:6px;font-size:0.6rem"></i><span data-i18n="soft.communication">Strong Communication</span></span>
+                        <span class="soft-tag"><i class="fas fa-bullseye" style="margin-right:6px;font-size:0.6rem"></i><span data-i18n="soft.result">Result Oriented</span></span>
+                        <span class="soft-tag"><i class="fas fa-calendar-check" style="margin-right:6px;font-size:0.6rem"></i><span data-i18n="soft.planning">Planning</span></span>
+                        <span class="soft-tag"><i class="fas fa-chart-line" style="margin-right:6px;font-size:0.6rem"></i><span data-i18n="soft.analytical">Analytical Thinking</span></span>
                     </div>
                 </div>
             </div>
@@ -1201,15 +1366,16 @@
     <section id="projects">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-label">Projects</div>
-                <h2 class="section-title">What I'm Building</h2>
+                <div class="section-label" data-i18n="nav.projects">Projects</div>
+                <h2 class="section-title" data-i18n="projects.title">What I'm Building</h2>
                 <div class="section-line"></div>
             </div>
+            <h3 class="project-group reveal" data-i18n="proj.academic">Academic Projects</h3>
             <div class="projects-grid">
                 <div class="project-card reveal">
                     <div class="project-icon"><i class="fas fa-running"></i></div>
-                    <div class="project-name">Human Activity Recognition</div>
-                    <div class="project-desc">Sensor-based activity classification using the SHL Dataset with advanced machine learning models including CNN-BiLSTM and Random Forest architectures.</div>
+                    <div class="project-name" data-i18n="proj.har.name">Human Activity Recognition</div>
+                    <div class="project-desc" data-i18n="proj.har.desc">Sensor-based activity classification using the SHL Dataset with advanced machine learning models including CNN-BiLSTM and Random Forest architectures.</div>
                     <div class="project-stack">
                         <span>Python</span>
                         <span>CNN-BiLSTM</span>
@@ -1218,25 +1384,66 @@
                     </div>
                 </div>
                 <div class="project-card reveal">
-                    <div class="project-icon"><i class="fas fa-shield-alt"></i></div>
-                    <div class="project-name">Cyber Security Research</div>
-                    <div class="project-desc">Threat hunting and security research focused on vulnerability assessment, penetration testing methodologies, and building defensive security systems.</div>
-                    <div class="project-stack">
-                        <span>Nessus</span>
-                        <span>Threat Hunting</span>
-                        <span>Ethical Hacking</span>
-                        <span>SOC</span>
-                    </div>
-                </div>
-                <div class="project-card reveal">
                     <div class="project-icon"><i class="fas fa-dna"></i></div>
-                    <div class="project-name">Benchmarking Generative Models</div>
-                    <div class="project-desc">Comparative analysis of generative models on single-cell gene expression data, evaluating VAE and GAN architectures for synthetic data generation quality.</div>
+                    <div class="project-name" data-i18n="proj.bench.name">Benchmarking Generative Models</div>
+                    <div class="project-desc" data-i18n="proj.bench.desc">Comparative analysis of generative models on single-cell gene expression data, evaluating VAE and GAN architectures for synthetic data generation quality.</div>
                     <div class="project-stack">
                         <span>Python</span>
                         <span>VAE</span>
                         <span>GAN</span>
                         <span>scRNA-seq</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="project-group reveal" data-i18n="proj.tools">Open Source Tools</h3>
+            <div class="projects-grid">
+                <div class="project-card reveal">
+                    <i class="fab fa-github project-corner" aria-hidden="true"></i>
+                    <div class="project-icon"><img src="assets/projects/laserpdf.png" alt="" width="44" height="44"></div>
+                    <div class="project-name"><a href="https://github.com/BatuhanCakmakk/laserpdf" target="_blank" rel="noopener">LaserPDF</a></div>
+                    <div class="project-desc" data-i18n="proj.laserpdf.desc">Lightweight, fully offline PDF viewer and editor for Windows: edit text, sign, redact, run OCR and export tables to Excel, with a built-in MCP server for AI assistants.</div>
+                    <div class="project-stack">
+                        <span>Tauri</span>
+                        <span>TypeScript</span>
+                        <span>pdf.js</span>
+                        <span>MCP</span>
+                    </div>
+                    <a href="https://apps.microsoft.com/detail/9NWK3HL0L4KB" target="_blank" rel="noopener" class="project-store">
+                        <i class="fab fa-microsoft"></i> <span data-i18n="proj.store">Get it on Microsoft Store</span>
+                    </a>
+                </div>
+                <div class="project-card reveal">
+                    <i class="fab fa-github project-corner" aria-hidden="true"></i>
+                    <div class="project-icon"><img src="assets/projects/clipbridge.svg" alt="" width="44" height="44"></div>
+                    <div class="project-name"><a href="https://github.com/BatuhanCakmakk/clipbridge" target="_blank" rel="noopener">ClipBridge</a></div>
+                    <div class="project-desc" data-i18n="proj.clipbridge.desc">Copy on your iPhone, paste on Windows, and back. A tiny tray app paired with iOS Shortcuts that moves text, images and files over the local network only.</div>
+                    <div class="project-stack">
+                        <span>Rust</span>
+                        <span>iOS Shortcuts</span>
+                        <span>mDNS</span>
+                    </div>
+                </div>
+                <div class="project-card reveal">
+                    <i class="fab fa-github project-corner" aria-hidden="true"></i>
+                    <div class="project-icon"><img src="assets/projects/solidclean.svg" alt="" width="44" height="44"></div>
+                    <div class="project-name"><a href="https://github.com/BatuhanCakmakk/SolidClean" target="_blank" rel="noopener">SolidClean</a></div>
+                    <div class="project-desc" data-i18n="proj.solidclean.desc">Free, open-source disk space analyzer and cleaner for Windows, with a treemap view, cleanup suggestions that explain every item, and the Recycle Bin by default.</div>
+                    <div class="project-stack">
+                        <span>Tauri</span>
+                        <span>Rust</span>
+                        <span>TypeScript</span>
+                    </div>
+                </div>
+                <div class="project-card reveal">
+                    <i class="fab fa-github project-corner" aria-hidden="true"></i>
+                    <div class="project-icon"><i class="fas fa-water"></i></div>
+                    <div class="project-name"><a href="https://github.com/BatuhanCakmakk/wavy-usage" target="_blank" rel="noopener">wavy-usage</a></div>
+                    <div class="project-desc" data-i18n="proj.wavy.desc">A Claude Code mod that shows 5-hour and 7-day usage limits, context fill and cache TTL as liquid-filled rings above the prompt, plus a pane of recent turns and costs. A tiny fighter jet rides along, its speed and afterburner shifting with the model's effort level.</div>
+                    <div class="project-stack">
+                        <span>TypeScript</span>
+                        <span>Claude Code</span>
+                        <span>Mod</span>
                     </div>
                 </div>
             </div>
@@ -1247,24 +1454,24 @@
     <section id="contact">
         <div class="container">
             <div class="section-header reveal">
-                <div class="section-label">Contact</div>
-                <h2 class="section-title">Let's Connect</h2>
+                <div class="section-label" data-i18n="nav.contact">Contact</div>
+                <h2 class="section-title" data-i18n="contact.title">Let's Connect</h2>
                 <div class="section-line"></div>
             </div>
             <div class="contact-content">
                 <div class="reveal">
                     <div class="contact-text">
-                        <p>I'm always open to discussing new opportunities, collaborations, or just having a conversation about cybersecurity, AI, and technology.</p>
+                        <p data-i18n="contact.text">I'm always open to discussing new opportunities, collaborations, or just having a conversation about cybersecurity, AI, and technology.</p>
                     </div>
                     <div class="contact-links">
                         <a href="mailto:batuhancakmakkce@gmail.com" class="contact-link">
                             <i class="fas fa-envelope"></i> batuhancakmakkce@gmail.com
                         </a>
                         <a href="https://www.linkedin.com/in/batuhan-çakmak-51198914a/" target="_blank" rel="noopener" class="contact-link">
-                            <i class="fab fa-linkedin"></i> LinkedIn Profile
+                            <i class="fab fa-linkedin"></i> <span data-i18n="contact.linkedin">LinkedIn Profile</span>
                         </a>
                         <div class="contact-link" style="cursor:default">
-                            <i class="fas fa-map-marker-alt"></i> İstanbul — Antalya, Turkey
+                            <i class="fas fa-map-marker-alt"></i> <span data-i18n="contact.location">İstanbul — Antalya, Turkey</span>
                         </div>
                     </div>
                 </div>
@@ -1278,9 +1485,9 @@
                         <span class="prompt">visitor@portfolio:~$</span> <span class="cmd">whoami</span><br>
                         <span class="output">Batuhan Çakmak</span><br><br>
                         <span class="prompt">visitor@portfolio:~$</span> <span class="cmd">cat interests.txt</span><br>
-                        <span class="output">Cyber Security | AI | Data Science</span><br><br>
+                        <span class="output" data-i18n="contact.interests">Cyber Security | AI | Data Science</span><br><br>
                         <span class="prompt">visitor@portfolio:~$</span> <span class="cmd">cat status.txt</span><br>
-                        <span class="highlight">Open for opportunities_</span><br><br>
+                        <span class="highlight" data-i18n="contact.status">Open for opportunities_</span><br><br>
                         <span class="prompt">visitor@portfolio:~$</span> <span class="cursor" style="animation:blink 1s step-end infinite"></span>
                     </div>
                 </div>
@@ -1290,7 +1497,7 @@
 
     <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 Batuhan Çakmak. Crafted with <span class="heart"><i class="fas fa-heart"></i></span> and lots of caffeine.</p>
+        <p data-i18n="footer">&copy; 2026 Batuhan Çakmak. Crafted with <span class="heart"><i class="fas fa-heart"></i></span> and lots of caffeine.</p>
     </footer>
 
     <script>
@@ -1334,13 +1541,23 @@
         });
 
         /* ═══════════ TYPING EFFECT ═══════════ */
-        const phrases = [
-            'Computer Engineer Candidate',
-            'Cyber Security Enthusiast',
-            'AI & Data Science Researcher',
-            'Ethical Hacking Explorer',
-            'YTU Computer Engineering'
-        ];
+        const typingPhrases = {
+            en: [
+                'Computer Engineer Candidate',
+                'Cyber Security Enthusiast',
+                'AI & Data Science Researcher',
+                'Ethical Hacking Explorer',
+                'YTU Computer Engineering'
+            ],
+            tr: [
+                'Bilgisayar Mühendisi Adayı',
+                'Siber Güvenlik Tutkunu',
+                'Yapay Zekâ ve Veri Bilimi Araştırmacısı',
+                'Etik Hacking Meraklısı',
+                'YTÜ Bilgisayar Mühendisliği'
+            ]
+        };
+        let phrases = typingPhrases.en;
 
         let phraseIdx = 0, charIdx = 0, isDeleting = false;
         const typedEl = document.getElementById('typed-text');
@@ -1419,6 +1636,125 @@
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
+        });
+
+        /* ═══════════ LANGUAGE (EN / TR) ═══════════ */
+        // English lives in the markup; Turkish replaces it per data-i18n key.
+        const tr = {
+            'nav.about': 'Hakkımda',
+            'nav.experience': 'Deneyim',
+            'nav.education': 'Eğitim',
+            'nav.skills': 'Yetenekler',
+            'nav.projects': 'Projeler',
+            'nav.contact': 'İletişim',
+
+            'hero.tag': 'SİSTEM ÇEVRİMİÇİ',
+            'hero.contact': 'İletişime Geç',
+            'hero.projects': 'Projeleri Gör',
+
+            'about.title': 'Ben Kimim',
+            'about.p1': 'Yıldız Teknik Üniversitesi\'nde <strong style="color:var(--cyan)">Bilgisayar Mühendisliği</strong> lisans eğitimime devam ediyorum. Veri analizi, siber güvenlik ve yapay zekâ gibi alanlar benim için büyük bir tutku kaynağı.',
+            'about.p2': 'Teknik bilgi ve becerilerimin yanında kişisel gelişime de büyük önem veriyorum. Hızla değişen teknoloji dünyasında güncel kalmak ve yenilikleri takip etmek önceliklerimin başında geliyor.',
+            'about.stat.years': 'Yıldır Bilişimde',
+            'about.stat.areas': 'Odak Alanı',
+            'about.stat.tech': 'Teknoloji',
+            'about.stat.langs': 'Dil',
+
+            'experience.title': 'Çalıştığım Yerler',
+            'exp.nicpro.date': 'Eylül 2026 — Devam ediyor',
+            'exp.nicpro.role': 'Ağ Stajyeri',
+            'exp.nicpro.loc': 'Kanada (Uzaktan)',
+            'exp.nicpro.ccna': 'CCNA Eğitimi',
+            'exp.enerjisa.date': 'Haziran 2024 — Ağustos 2024',
+            'exp.enerjisa.role': 'Siber Güvenlik Stajyeri — Bilgi Teknolojileri',
+            'exp.enerjisa.loc': 'İstanbul, Türkiye',
+            'exp.enerjisa.protocols': 'Ağ Protokolleri',
+            'exp.enerjisa.threat': 'Tehdit Tespiti',
+            'exp.enerjisa.hacking': 'Etik Hacking',
+            'exp.enerjisa.soc': 'SOC Operasyonları',
+            'exp.enerjisa.analysis': 'Güvenlik Analizi',
+
+            'education.title': 'Akademik Geçmiş',
+            'edu.ytu.name': 'Yıldız Teknik Üniversitesi',
+            'edu.ytu.degree': 'Lisans — Bilgisayar Mühendisliği',
+            'edu.hs.name': 'Bahçeşehir Anadolu Lisesi',
+            'edu.hs.degree': 'Okul Birincisi',
+
+            'skills.title': 'Cephaneliğim',
+            'skills.technical': 'Teknik',
+            'skills.languages': 'Diller',
+            'skills.turkish': 'Türkçe',
+            'skills.english': 'İngilizce',
+            'skills.fluent': 'Akıcı',
+            'skills.upper': 'Orta-İleri',
+            'skills.soft': 'Kişisel Yetkinlikler',
+            'soft.leadership': 'Liderlik',
+            'soft.learner':'Hızlı Öğrenen ve Uyum Sağlayan',
+            'soft.teamwork': 'Takım Çalışması',
+            'soft.communication': 'Güçlü İletişim',
+            'soft.result': 'Sonuç Odaklı',
+            'soft.planning': 'Planlama',
+            'soft.analytical': 'Analitik Düşünme',
+
+            'projects.title': 'Neler Geliştiriyorum',
+            'proj.academic': 'Akademik Projeler',
+            'proj.tools': 'Açık Kaynak Araçlar',
+            'proj.har.name': 'İnsan Aktivitesi Tanıma',
+            'proj.har.desc': 'SHL veri setiyle, CNN-BiLSTM ve Random Forest gibi gelişmiş makine öğrenmesi modelleri kullanılarak sensör tabanlı aktivite sınıflandırma.',
+            'proj.bench.name': 'Üretken Modellerin Karşılaştırılması',
+            'proj.bench.desc': 'Tek hücre gen ifadesi verileri üzerinde üretken modellerin karşılaştırmalı analizi: VAE ve GAN mimarilerinin sentetik veri üretim kalitesinin değerlendirilmesi.',
+            'proj.laserpdf.desc': 'Windows için hafif ve tamamen çevrimdışı PDF görüntüleyici ve düzenleyici: metin düzenleme, imzalama, karartma, OCR ve tabloları Excel\'e aktarma. Yapay zekâ asistanları için yerleşik bir MCP sunucusu da içeriyor.',
+            'proj.clipbridge.desc': 'iPhone\'da kopyala, Windows\'ta yapıştır; tersi de çalışır. iOS Kestirmeleri ile eşleşen küçük bir tepsi uygulaması; metin, resim ve dosyaları yalnızca yerel ağ üzerinden taşır.',
+            'proj.solidclean.desc': 'Windows için ücretsiz ve açık kaynak disk analiz ve temizlik aracı: treemap görünümü, her öğeyi açıklayan temizlik önerileri ve varsayılan olarak Geri Dönüşüm Kutusu.',
+            'proj.wavy.desc': 'Claude Code için bir mod: 5 saatlik ve 7 günlük kullanım limitlerini, context doluluğunu ve cache süresini prompt kutusunun üstünde sıvı dolu halkalarla gösterir; yanında son turların ve maliyetlerinin listelendiği bir panel var. Küçük bir savaş uçağı da eşlik ediyor; hızı ve art yakıcısı modelin effort seviyesine göre değişiyor.',
+            'proj.store': 'Microsoft Store\'dan edinin',
+
+            'contact.title': 'Bağlantıda Kalalım',
+            'contact.text': 'Yeni fırsatlar, iş birlikleri ya da siber güvenlik, yapay zekâ ve teknoloji üzerine sohbet etmek için her zaman açığım.',
+            'contact.linkedin': 'LinkedIn Profilim',
+            'contact.location': 'İstanbul — Antalya, Türkiye',
+            'contact.interests': 'Siber Güvenlik | Yapay Zekâ | Veri Bilimi',
+            'contact.status': 'Yeni fırsatlara açık_',
+
+            'footer': '&copy; 2026 Batuhan Çakmak. <span class="heart"><i class="fas fa-heart"></i></span> ve bolca kafeinle hazırlandı.'
+        };
+
+        const meta = {
+            en: { title: document.title, description: document.querySelector('meta[name="description"]').content },
+            tr: {
+                title: 'Batuhan Çakmak — Siber Güvenlik & Yapay Zekâ',
+                description: 'Batuhan Çakmak - Bilgisayar Mühendisi Adayı, Siber Güvenlik Tutkunu, Yapay Zekâ Araştırmacısı'
+            }
+        };
+
+        const i18nEls = document.querySelectorAll('[data-i18n]');
+        i18nEls.forEach(el => { el.dataset.en = el.innerHTML; });
+
+        function setLang(lang) {
+            i18nEls.forEach(el => {
+                el.innerHTML = lang === 'tr' ? (tr[el.dataset.i18n] ?? el.dataset.en) : el.dataset.en;
+            });
+            document.documentElement.lang = lang;
+            document.title = meta[lang].title;
+            document.querySelector('meta[name="description"]').content = meta[lang].description;
+            document.querySelectorAll('#langToggle [data-lang]').forEach(s => {
+                s.classList.toggle('active', s.dataset.lang === lang);
+            });
+
+            phrases = typingPhrases[lang];
+            phraseIdx = 0;
+            charIdx = 0;
+            isDeleting = false;
+
+            try { localStorage.setItem('lang', lang); } catch (e) {}
+        }
+
+        let savedLang = null;
+        try { savedLang = localStorage.getItem('lang'); } catch (e) {}
+        setLang(savedLang || (navigator.language.toLowerCase().startsWith('tr') ? 'tr' : 'en'));
+
+        document.getElementById('langToggle').addEventListener('click', () => {
+            setLang(document.documentElement.lang === 'tr' ? 'en' : 'tr');
         });
     </script>
 </body>
